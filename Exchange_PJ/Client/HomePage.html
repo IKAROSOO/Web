@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 환율 및 금 시세</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <div id="krw-jpy-box" class="rate-box">
+        <h2>원-엔 (KRW/JPY)</h2>
+        <div class="price-info">
+            <p>파는 가격: <span id="krw-jpy-sell">...</span></p>
+            <p>사는 가격: <span id="krw-jpy-buy">...</span></p>
+            <p class="change">전일 대비: <span id="krw-jpy-change">...</span></p>
+        </div>
+    </div>
+    <div id="krw-usd-box" class="rate-box">
+        <h2>원-달러 (KRW/USD)</h2>
+        <div class="price-info">
+            <p>파는 가격: <span id="krw-usd-sell">...</span></p>
+            <p>사는 가격: <span id="krw-usd-buy">...</span></p>
+            <p class="change">전일 대비: <span id="krw-usd-change">...</span></p>
+        </div>
+    </div>
+    <div id="krw-gold-box" class="rate-box">
+        <h2>원-금 (KRW/GOLD)</h2>
+        <div class="price-info">
+            <p>파는 가격: <span id="krw-gold-sell">...</span></p>
+            <p>사는 가격: <span id="krw-gold-buy">...</span></p>
+            <p class="change">전일 대비: <span id="krw-gold-change">...</span></p>
+        </div>
+    </div>
+    <div id="jpy-gold-box" class="rate-box">
+        <h2>엔-금 (JPY/GOLD)</h2>
+        <div class="price-info">
+            <p>파는 가격: <span id="jpy-gold-sell">...</span></p>
+            <p>사는 가격: <span id="jpy-gold-buy">...</span></p>
+            <p class="change">전일 대비: <span id="jpy-gold-change">...</span></p>
+        </div>
+    </div>
+
+    <script src="./Client.js"></script>
+
+</body>
+</html>
