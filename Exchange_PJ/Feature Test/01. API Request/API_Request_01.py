@@ -6,7 +6,7 @@
 다른 코드에서 import할 때 url주소가 2번 나오지 않게 설정
 '''
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import requests
 import os
