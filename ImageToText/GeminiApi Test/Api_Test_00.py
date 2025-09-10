@@ -18,15 +18,20 @@ with open(CONFIG_PATH, 'r') as f:
     except json.JSONDecodeError:
         print(f"Error : {CONFIG_PATH} isn't Correct JSON FILE!")
 
+
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-prompt = "This is API Test. If you recognize this, say something"
+def main():
+    prompt = "This is API Test. If you recognize this, say something"
 
-try:
-    response = model.generate_content(prompt)
+    try:
+        response = model.generate_content(prompt)
 
-    print("---Gemini's Answer---")
-    print(response.text)
-except Exception as e:
-    print(f"Error : {e}")
+        print("---Gemini's Answer---")
+        print(response.text)
+    except Exception as e:
+        print(f"Error : {e}")
+
+if __name__ == "__main__":
+    main()
