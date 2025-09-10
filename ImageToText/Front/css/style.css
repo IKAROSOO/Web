@@ -1,0 +1,147 @@
+/* 기본 폰트 및 배경 설정 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    /* Flexbox를 이용해 자식 요소를 화면 정중앙에 배치합니다. */
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;    /* 수직 중앙 정렬 */
+    height: 100vh;          /* body의 높이를 화면 전체 높이로 설정해야 수직 정렬이 동작합니다. */
+    margin: 0;
+}
+
+/* 전체를 감싸는 컨테이너 */
+.container {
+    max-width: 800px;
+    width: 90%;
+    text-align: center;
+}
+
+/* 메인 제목 스타일 */
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+/* 드래그 앤 드롭 영역 스타일 */
+.drop-zone {
+    background-color: #f3b711; /* 이미지의 노란색 배경 */
+    border: 2px dotted #fff; /* 흰색 점선 테두리 */
+    border-radius: 12px;
+    padding: 60px 40px;
+    
+    /* 내부 요소들을 세로로 정렬하고 가운데 맞춤 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    color: white;
+    transition: background-color 0.3s;
+}
+
+/* 파일 아이콘 스타일 */
+.file-icon {
+    margin-bottom: 20px;
+}
+
+/* 파일 선택 버튼 스타일 */
+.upload-btn {
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+    
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 아이콘과 텍스트 사이 간격 */
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.upload-btn .fa-chevron-down {
+    margin-left: 15px;
+    font-size: 0.8rem;
+}
+
+/* "or drop files here" 텍스트 스타일 */
+.drop-text {
+    margin-top: 20px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* 미리보기 이미지 */
+#image-preview {
+    display: none;
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 15px;
+}
+
+/* 메인화면 돌아가기 버튼 */
+.return-btn {
+    display: none;
+
+    background-color: #080808;
+    color: #ddd;
+    border: 1px solid #7e7e7e;
+    border-radius: 8px;
+    
+    padding: 12px 24px; 
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px; /* 위쪽 요소와의 간격을 줍니다. */
+}
+
+.return-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(248, 240, 240, 0.877);
+}
+
+/* --- ↓↓↓ UI 상태 관리를 위한 규칙 추가 ↓↓↓ --- */
+
+.drop-zone:not(.preview-mode) .image-preview,
+.drop-zone:not(.preview-mode) .return-btn {
+    display: none;
+}
+
+.drop-zone.preview-mode .file-icon,
+.drop-zone.preview-mode .upload-btn,
+.drop-zone.preview-mode .drop-text {
+    display: none; /* 초기 화면 요소들 숨기기 */
+}
+
+.drop-zone.preview-mode #image-preview,
+.drop-zone.preview-mode .return-btn {
+    display: block; /* 미리보기 화면 요소들 보여주기 */
+}
+
+/* return-btn은 inline-flex 속성이 필요하다면 개별적으로 지정 */
+.drop-zone.preview-mode .return-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
