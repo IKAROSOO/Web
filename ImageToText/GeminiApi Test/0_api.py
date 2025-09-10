@@ -21,5 +21,12 @@ with open(CONFIG_PATH, 'r') as f:
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-answer = ""
+prompt = "This is API Test. If you recognize this, say something"
 
+try:
+    response = model.generate_content(prompt)
+
+    print("---Gemini's Answer---")
+    print(response.text)
+except Exception as e:
+    print(f"Error : {e}")
