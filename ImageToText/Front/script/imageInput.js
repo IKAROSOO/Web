@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewImage = document.getElementById('image-preview');
     const dropZone = document.getElementById('drop-zone');
     
-    const backendUrl = 'http://127.0.0.1:5000';
+    const backendUrl = 'http://127.0.0.1:5000/image-processing';
     const reader = new FileReader();
 
     // 업로드 버튼에 대한 이벤트리스너
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 서버로 이미지 데이터를 송신하는 함수
         fetch(backendUrl, {
             method: "POST",
-            Headers: {
+            headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(dataToSend)
