@@ -1,5 +1,5 @@
 from PIL import Image
-import Api_Test_00 as config
+import Gemini_Test_00 as config
 import google.generativeai as genai
 
 '''

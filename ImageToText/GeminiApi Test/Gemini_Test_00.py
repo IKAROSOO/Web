@@ -6,7 +6,7 @@ import os
 # os 라이브러리를 활용해 항상 config.json의 절대경로를 파악
 file_path = os.path.dirname(os.path.abspath(__file__))
 script_path = os.path.dirname(file_path)
-CONFIG_PATH = os.path.join(script_path, 'config.json')
+CONFIG_PATH = os.path.join(script_path, 'Gemini_config.json')
 
 # json파일을 읽어와서 API_KEY값을 뽑아내는 구문
 with open(CONFIG_PATH, 'r') as f:
