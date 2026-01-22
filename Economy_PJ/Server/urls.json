@@ -1,0 +1,8 @@
+{
+    "FRED_OBSERVATIONS_ENDPOINT":
+        "https://api.stlouisfed.org/fred/series/observations",
+    "FRED_CurrencyList":
+        "https://api.stlouisfed.org/fred/category/series",
+    "TEST":
+        "TEST"
+}

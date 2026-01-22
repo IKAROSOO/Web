@@ -1,0 +1,143 @@
+/* 기본 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    background-color: #f0f2f5;
+    color: #1c1e21;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #1a237e;
+    color: white;
+    padding: 2.5rem 5%;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 대시보드 그리드: 화면이 넓으면 2열, 좁으면 1열로 자동 조절 */
+.dashboard-container {
+    display: grid;
+    /* 핵심: 카드의 '최소 너비'를 결정합니다. */
+    /* 350px은 3열이 나왔을 때 일반적인 모니터에서 적당한 크기입니다. */
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+    
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px; /* 전체 너비를 제한해서 4열로 넘어가는 것을 방지 */
+    margin: 0 auto;
+}
+
+/* 카드 스타일 */
+.chart-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+.chart-card:hover {
+    transform: translateY(-4px);
+}
+
+/* 카드 헤더 및 버튼 배치 */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;      /* 제목과 버튼 사이 최소 간격 */
+    padding-bottom: 15px; /* 그래프 영역과의 간격 확보 */
+    min-height: 50px;    /* 헤더의 최소 높이를 고정하여 정렬 유지 */
+}
+
+.header-left h3 {
+    white-space: nowrap;    /* 줄바꿈 금지 */
+    /* text-overflow: ellipsis; <- 이 줄을 삭제하거나 주석 처리하세요 */
+    font-size: 1.1rem;      /* 기본 크기 */
+    font-weight: 700;
+    transition: font-size 0.1s ease; /* 크기 변경 시 부드럽게 */
+}
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    margin-left: 8px;
+}
+
+/* 기간 조절 버튼 그룹 */
+.period-controls {
+    background: #f1f3f5;
+    padding: 4px;
+    border-radius: 10px;
+    flex-shrink: 0; 
+}
+
+.btn-period {
+    border: none;
+    background: none;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #616770;
+    transition: all 0.2s;
+}
+
+.btn-period:hover {
+    background: #e4e6e9;
+    color: #1c1e21;
+}
+
+.btn-period.active {
+    background: #ffffff;
+    color: #1a237e;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-custom {
+    color: #1a237e;
+    border-left: 1px solid #dee2e6;
+    margin-left: 4px;
+    padding-left: 14px;
+}
+
+/* 그래프 출력 영역 */
+.chart-area {
+    width: 100%;
+    height: 350px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    border: 1px dashed #ced4da;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.placeholder-text {
+    color: #adb5bd;
+    font-size: 0.9rem;
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #8d949e;
+    font-size: 0.85rem;
+}
