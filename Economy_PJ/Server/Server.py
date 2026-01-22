@@ -23,7 +23,7 @@ def get_app_root():
 
 APP_ROOT = get_app_root()
 
-url_path = os.path.join(APP_ROOT, "urls.json")
+url_path = os.path.join(APP_ROOT, "Server", "urls.json")
 env_path = os.path.join(APP_ROOT, 'apikey.env')
 
 WEB_DIR = os.path.join(APP_ROOT, "Web")
@@ -39,7 +39,7 @@ app = Flask(
 load_dotenv(dotenv_path=env_path)
 FRED_API_KEY = os.getenv("FRED_API")
 
-print(f"\n\n{FRED_API_KEY}\n\n")
+# print(f"\n\n{FRED_API_KEY}\n\n")
 
 indicator_list = {
     "exchange-rate": "DEXKOUS",
@@ -66,6 +66,8 @@ except FileNotFoundError:
     print("Can't Fine Json File")
     print("ShutDown the Program")
     sys.exit(1)
+
+print(f'\n\n{URL_DATA}\n\n')
 
 def ExchangeRate(api_key, url_data, series_id, start_date, end_date):
     if end_date is None:
