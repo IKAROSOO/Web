@@ -24,7 +24,7 @@ def get_app_root():
 APP_ROOT = get_app_root()
 
 url_path = os.path.join(APP_ROOT, "Server", "urls.json")
-env_path = os.path.join(APP_ROOT, 'apikey.env')
+env_path = os.path.join(APP_ROOT, "Server", 'apikey.env')
 
 WEB_DIR = os.path.join(APP_ROOT, "Web")
 HTML_DIR = os.path.join(WEB_DIR, "HTML")
