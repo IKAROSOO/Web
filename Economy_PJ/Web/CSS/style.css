@@ -150,3 +150,65 @@ footer {
     color: #8d949e;
     font-size: 0.85rem;
 }
+
+/* 커스텀 기간 설정 모달 */
+.custom-period-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+    width: 280px;
+}
+
+.custom-period-modal h4 {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.custom-period-modal label {
+    font-size: 0.85rem;
+    color: #495057;
+}
+
+.custom-period-modal input[type="date"] {
+    width: 100%;
+    margin-top: 4px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+}
+
+.custom-period-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.custom-period-actions button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.custom-period-confirm {
+    background: #1a237e;
+    color: white;
+}
+
+.custom-period-cancel {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.hidden {
+    display: none;
+}

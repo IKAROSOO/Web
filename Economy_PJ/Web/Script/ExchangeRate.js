@@ -103,33 +103,10 @@ async function requestDatabyPeriod(indicatorId, startDate, endDate=null) {
 }
 
 function openCustomPeriodUI() {
-    const container = document.createElement("div");
-    container.style.position = "fixed";
-    container.style.top = "50%";
-    container.style.left = "50%";
-    container.style.transform = "translate(-50%, -50%)";
-    container.style.background = "#fff";
-    container.style.padding = "20px";
-    container.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
-    container.style.zIndex = "1000";
+    const modal = document.getElementById("custom-period-modal");
+    modal.classList.remove("hidden");
 
-    container.innerHTML = `
-        <h4>기간 설정</h4>
-        <label>
-            시작일<br>
-            <input type="date" id="custom-start">
-        </label><br><br>
-        <label>
-            종료일<br>
-            <input type="date" id="custom-end">
-        </label><br><br>
-        <button id="custom-confirm">확인</button>
-        <button id="custom-cancel">취소</button>
-    `;
-
-    document.body.appendChild(container);
-
-    document.getElementById("custom-confirm").onclick = () => {
+    modal.querySelector(".custom-period-confirm").onclick = () => {
         const start = document.getElementById("custom-start").value;
         const end = document.getElementById("custom-end").value;
 
@@ -143,16 +120,17 @@ function openCustomPeriodUI() {
             return;
         }
 
-        document.body.removeChild(container);
+        modal.classList.add("hidden");
 
         const indicatorId = card.dataset.indicatorId;
         requestDatabyPeriod(indicatorId, start, end);
     };
 
-    document.getElementById("custom-cancel").onclick = () => {
-        document.body.removeChild(container);
+    modal.querySelector(".custom-period-cancel").onclick = () => {
+        modal.classList.add("hidden");
     };
 }
+
 
 function init() {
     chartTitleElement.textContent = currentIndicator.title;
