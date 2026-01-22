@@ -1,6 +1,11 @@
 **설계 배경 :
 환울, 화폐가치, 금리 등의 다양한 경제지표를 한눈에 확인할 수 있는 프로그램을 작성해보고 싶음** 
 
+# 향후 추가 사항들
+$$
+	1. 최초 사용시 API KEY를 입력하여 env에 저장하는 기능
+	2. 이미 저장된 API KEY를 교체/갱신하는 기능
+$$ 
 
 ==설계==
 1. Python을 활용한 Server
@@ -19,3 +24,5 @@
 	5. '임의'의 국가의 경제지표 그래프를 N개 선택가능
 		1. API로 선택가능한 경제지표 리스트 불러오기
 		2. '환율'의 경우, 주고받는 통화를 자유롭게 선택 가능
+
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)  ![js](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![js]()https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white
