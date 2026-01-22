@@ -25,4 +25,4 @@ $$
 		1. API로 선택가능한 경제지표 리스트 불러오기
 		2. '환율'의 경우, 주고받는 통화를 자유롭게 선택 가능
 
-![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)  ![js](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![js]()https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)  ![js](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![js](https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white)
