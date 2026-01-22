@@ -9,17 +9,37 @@ import json
 import sys
 import os
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-url_path = os.path.join(current_dir, 'urls.json')
-env_path = os.path.join(current_dir, 'apikey.env')
+def get_app_root():
+    '''
+    개발 / 테스트 / pyinstaller / onefile 모두 대응 가능한 경로를 설정하는 함수
+    '''
 
-app = Flask(__name__,
-            template_folder=os.path.join(current_dir, "../Web/HTML"),
-            static_folder=os.path.join(current_dir, "../Web"),
-            static_url_path='')
+    # Pyinstaller onefile
+    if hasattr(sys, "_MEIPASS"):
+        return sys._MEIPASS
+
+    # 개발 / 테스트    
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+APP_ROOT = get_app_root()
+
+url_path = os.path.join(APP_ROOT, "urls.json")
+env_path = os.path.join(APP_ROOT, 'apikey.env')
+
+WEB_DIR = os.path.join(APP_ROOT, "Web")
+HTML_DIR = os.path.join(WEB_DIR, "HTML")
+
+app = Flask(
+    __name__,
+    template_folder=HTML_DIR,
+    static_folder=WEB_DIR,
+    static_url_path=""
+)
 
 load_dotenv(dotenv_path=env_path)
 FRED_API_KEY = os.getenv("FRED_API")
+
+print(f"\n\n{FRED_API_KEY}\n\n")
 
 indicator_list = {
     "exchange-rate": "DEXKOUS",
