@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>경제지표 대시보드</title>
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    <link rel="stylesheet" href="/src/CSS/style.css">
 </head>
 <body>
 
@@ -47,7 +43,6 @@
         <p>&copy; 2024 Economy Dashboard Project | Data from FRED</p>
     </footer>
 
-    <!-- 🔽 커스텀 기간 설정 모달 (HTML로 분리) -->
     <div id="custom-period-modal" class="custom-period-modal hidden">
         <h4>기간 설정</h4>
 
@@ -69,8 +64,7 @@
         </div>
     </div>
 
-    <!-- JS -->
-    <script src="{{ url_for('static', filename='Script/ExchangeRate.js') }}"></script>
+    <script type="module" src="/src/Script/ExchangeRate.js"></script>
 
 </body>
 </html>

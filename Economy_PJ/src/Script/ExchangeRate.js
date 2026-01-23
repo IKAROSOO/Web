@@ -1,3 +1,6 @@
+import Chart from "chart.js/auto";
+import zoomPlugin from 'chartjs-plugin-zoom';
+
 const card = document.querySelector('.chart-card');
 const chartTitleElement = document.getElementById('chart-title');
 const placeholder = document.querySelector('.placeholder-text');

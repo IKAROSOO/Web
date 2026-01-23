@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+from flask_cors import CORS
 from dotenv import load_dotenv
 from threading import Timer
 import pandas as pd
@@ -29,12 +30,9 @@ env_path = os.path.join(APP_ROOT, "Server", 'apikey.env')
 WEB_DIR = os.path.join(APP_ROOT, "Web")
 HTML_DIR = os.path.join(WEB_DIR, "HTML")
 
-app = Flask(
-    __name__,
-    template_folder=HTML_DIR,
-    static_folder=WEB_DIR,
-    static_url_path=""
-)
+app = Flask(__name__)
+CORS(app)
+
 
 load_dotenv(dotenv_path=env_path)
 FRED_API_KEY = os.getenv("FRED_API")
@@ -67,7 +65,7 @@ except FileNotFoundError:
     print("ShutDown the Program")
     sys.exit(1)
 
-print(f'\n\n{URL_DATA}\n\n')
+# print(f'\n\n{URL_DATA}\n\n')
 
 def ExchangeRate(api_key, url_data, series_id, start_date, end_date):
     if end_date is None:
@@ -137,7 +135,4 @@ def data_request():
     return jsonify(result)
 
 if __name__ == '__main__':
-    if not os.environ.get("WERKZEUG_RUN_MAIN"):
-        Timer(1.5, OpenBrowser).start()
-
     app.run(debug=True, port=5050)
