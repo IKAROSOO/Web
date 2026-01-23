@@ -22,3 +22,9 @@
 		2. '환율'의 경우, 주고받는 통화를 자유롭게 선택 가능
 
 ![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)  ![js](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![js](https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white)
+
+## Release 현황
+	1. v0.1 : 2026_01_23
+		a. KRW-USD의 그래프만 확인가능
+		b. 그래프의 확대/축소 기능 미지원
+		c. 기간설정은 1년/5년/10년/기간설정 으로 선택가능
