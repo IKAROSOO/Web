@@ -33,16 +33,13 @@
             </div>
 
             <div id="chart-exchange" class="chart-area">
+                <div id="chart-container">
+                    <canvas id="indicator-chart"></canvas>
+                </div>
                 <span class="placeholder-text">기간을 선택하세요</span>
-                <canvas id="indicator-chart"></canvas>
             </div>
         </section>
     </main>
-
-    <footer>
-        <p>&copy; 2024 Economy Dashboard Project | Data from FRED</p>
-    </footer>
-
     <div id="custom-period-modal" class="custom-period-modal hidden">
         <h4>기간 설정</h4>
 
@@ -64,7 +61,7 @@
         </div>
     </div>
 
-    <script type="module" src="/src/Script/ExchangeRate.js"></script>
+    <script type="module" src="/src/Script/Temp.js"></script>
 
 </body>
 </html>
