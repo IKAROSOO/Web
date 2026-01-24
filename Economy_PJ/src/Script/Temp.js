@@ -38,6 +38,7 @@ function renderChart(data) {
                 return `${yyyy.slice(2)}-${mm}-${dd}`;
             }
         },
+        /* ===== 부모 컨테이너의 실제 크기를 반영 ===== */
         width: chartContainer.clientWidth,
         height: chartContainer.clientHeight,
         layout: {
@@ -56,6 +57,19 @@ function renderChart(data) {
         color: '#2962FF',
         lineWidth: 2,
     });
+
+    /* ===== 컨테이너의 크기가 변할 시 차트크기 자동 업데이트 ===== */
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            const {width, height} = entry.contentRect;
+            economicChart.applyOptions({
+                width: width,
+                height: height
+            });
+        }
+    });
+
+    resizeObserver.observe(chartContainer);
 
     const chartData = data
         .filter(item => item.value !== null && item.value !== ".")
