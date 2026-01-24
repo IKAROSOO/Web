@@ -141,61 +141,98 @@ footer {
 }
 
 /* 커스텀 기간 설정 모달 */
+/* 커스텀 기간 설정 모달 (2번: 캘린더 일체형 스타일) */
 .custom-period-modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: #ffffff;
-    padding: 20px 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    padding: 24px;
+    border-radius: 16px; /* 카드와 통일감 있게 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     z-index: 1000;
-    width: 280px;
+    width: 320px;
+    border: 1px solid #f0f0f0;
 }
 
 .custom-period-modal h4 {
-    margin-bottom: 12px;
-    font-size: 1rem;
+    margin: 0 0 20px 0;
+    font-size: 1.1rem;
     font-weight: 700;
+    color: #1a237e; /* 헤더와 동일한 메인 컬러 */
+    text-align: center;
 }
 
+/* 날짜 입력 그룹 정렬 */
 .custom-period-modal label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     font-size: 0.85rem;
-    color: #495057;
+    color: #616770;
+    margin-bottom: 16px;
+    font-weight: 600;
 }
 
+/* 인풋 디자인 개선 */
 .custom-period-modal input[type="date"] {
     width: 100%;
-    margin-top: 4px;
-    padding: 6px 8px;
-    border-radius: 6px;
-    border: 1px solid #ced4da;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e4e6e9;
+    background: #f8f9fa;
+    font-size: 0.9rem;
+    color: #1c1e21;
+    outline: none;
+    transition: all 0.2s ease;
 }
 
+.custom-period-modal input[type="date"]:focus {
+    border-color: #1a237e;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+}
+
+/* 하단 버튼 배치 */
 .custom-period-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 16px;
+    justify-content: space-between; /* 양쪽 끝 배치 */
+    gap: 10px;
+    margin-top: 24px;
 }
 
 .custom-period-actions button {
-    padding: 6px 12px;
-    border-radius: 6px;
+    flex: 1; /* 버튼 크기 균등하게 */
+    padding: 12px;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
+/* 취소 버튼 */
+.custom-period-cancel {
+    background: #f1f3f5;
+    color: #616770;
+}
+
+.custom-period-cancel:hover {
+    background: #e4e6e9;
+}
+
+/* 확인 버튼 */
 .custom-period-confirm {
     background: #1a237e;
     color: white;
 }
 
-.custom-period-cancel {
-    background: #e9ecef;
-    color: #495057;
+.custom-period-confirm:hover {
+    background: #0d144d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(26, 35, 126, 0.2);
 }
 
 .hidden {
@@ -229,3 +266,24 @@ footer {
     opacity: 0;
 }
 
+/* 배경 오버레이 스타일 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* 배경 어둡기 정도 */
+    backdrop-filter: blur(2px);     /* 배경 흐리게 (선택 사항) */
+    z-index: 999;                   /* 모달(1000)보다 낮고 다른 요소보다 높게 */
+}
+
+/* 모달의 z-index 확인 */
+.custom-period-modal {
+    z-index: 1000; /* 오버레이보다 위에 있어야 함 */
+}
+
+/* hidden 클래스는 공용으로 사용 */
+.hidden {
+    display: none !important;
+}

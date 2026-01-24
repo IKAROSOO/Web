@@ -29,6 +29,15 @@ function renderChart(data) {
     loadingOverlay.classList.add('hidden');
 
     economicChart = createChart(chartContainer, {
+        localization: {
+            /* ===== 기존의 DD-MM-YY로 나오는 것을 YY-MM-DD로 변형 ===== */
+            timeFormatter: (time) => {
+                // console.log(time, typeof(time)); -> time의 형과 형태 확인용
+
+                const [yyyy, mm, dd] = time.split('-');
+                return `${yyyy.slice(2)}-${mm}-${dd}`;
+            }
+        },
         width: chartContainer.clientWidth,
         height: 350,
         layout: {
@@ -86,6 +95,18 @@ async function requestDatabyPeriod(indicatorId, startDate, endDate = null) {
     }
 }
 
+/* ===== 기간설정 버튼 클릭시 배경 블러처리 및 상호작용 방지 ===== */
+function openPeriodModal() {
+    document.getElementById('custom-period-modal').classList.remove('hidden');
+    document.getElementById('modal-overlay').classList.remove('hidden');
+}
+
+/* ===== 기간설정 완료시 원상복구 ===== */
+function closePeriodModal() {
+    document.getElementById('custom-period-modal').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.add('hidden');
+}
+
 /* ===== 기간 버튼 ===== */
 periodControls.addEventListener('click', (e) => {
     const btn = e.target.closest('.btn-period');
@@ -107,7 +128,10 @@ periodControls.addEventListener('click', (e) => {
 
 /* ===== 커스텀 기간 ===== */
 function openCustomPeriodUI() {
+    openPeriodModal();
+
     const modal = document.getElementById("custom-period-modal");
+    const overlay = document.getElementById("modal-overlay");
     modal.classList.remove("hidden");
 
     modal.querySelector(".custom-period-confirm").onclick = () => {
@@ -117,13 +141,17 @@ function openCustomPeriodUI() {
         if (!start || !end) return alert("날짜를 모두 선택하세요");
         if (new Date(start) > new Date(end)) return alert("날짜 범위 오류");
 
-        modal.classList.add("hidden");
+        closePeriodModal();
         requestDatabyPeriod(currentIndicator.id, start, end);
     };
 
     modal.querySelector(".custom-period-cancel").onclick = () => {
-        modal.classList.add("hidden");
+        closePeriodModal();
     };
+
+    overlay.onclick = () => {
+        closePeriodModal();
+    }
 }
 
 /* ===== 초기 로드 ===== */

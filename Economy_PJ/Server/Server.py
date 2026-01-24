@@ -33,7 +33,6 @@ HTML_DIR = os.path.join(WEB_DIR, "HTML")
 app = Flask(__name__)
 CORS(app)
 
-
 load_dotenv(dotenv_path=env_path)
 FRED_API_KEY = os.getenv("FRED_API")
 
