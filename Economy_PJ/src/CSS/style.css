@@ -1,4 +1,4 @@
-/* 기본 초기화 */
+/* ================= 기본 초기화 ================= */
 * {
     margin: 0;
     padding: 0;
@@ -25,16 +25,33 @@ header h1 {
     margin-bottom: 0.5rem;
 }
 
-/* 1. 대시보드 컨테이너: 복수 그리드에서 단일 중앙 배치로 변경 */
+/* ================= 대시보드 컨테이너 ================= */
+/* 🔧 grid로 통일 (flex 제거) */
 .dashboard-container {
-    display: flex;             /* 그리드 대신 플렉스로 중앙 정렬 */
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
     padding: 40px 20px;
-    max-width: 1000px;         /* 1개일 때 너무 넓어지지 않도록 조정 */
+    max-width: 1200px;
     margin: 0 auto;
+    align-items: stretch;
 }
 
-/* 2. 카드 스타일 및 부유(Floating) 효과 유지 */
+/* 카드 1개 */
+.dashboard-container.single {
+    grid-template-columns: 1fr;
+}
+
+.dashboard-container.single .chart-card {
+    grid-column: 1 / -1;
+}
+
+/* 카드 개수 홀수 */
+.dashboard-container.odd .chart-card:last-child {
+    grid-column: 1 / -1;
+}
+
+/* ================= 차트 카드 ================= */
 .chart-card {
     background: #ffffff;
     border-radius: 16px;
@@ -42,17 +59,17 @@ header h1 {
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* 전환 효과 유지 */
-    width: 100%;               /* 컨테이너 안에서 꽉 차게 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    min-height: 450px;
 }
 
-/* 마우스 호버 시 떠오르는 효과 유지 */
 .chart-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
 
-/* 카드 헤더 및 버튼 배치 */
+/* ================= 카드 헤더 ================= */
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -74,7 +91,6 @@ header h1 {
 }
 
 .status-dot {
-    display: inline-block;
     width: 8px;
     height: 8px;
     background-color: #4caf50;
@@ -82,12 +98,12 @@ header h1 {
     margin-left: 8px;
 }
 
-/* 기간 조절 버튼 그룹 */
+/* ================= 기간 버튼 ================= */
 .period-controls {
     background: #f1f3f5;
     padding: 4px;
     border-radius: 10px;
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 .btn-period {
@@ -120,15 +136,14 @@ header h1 {
     padding-left: 14px;
 }
 
-/* 3. 그래프 출력 영역: 기존의 회색 영역 및 점선 테두리 유지 */
+/* ================= 차트 영역 ================= */
 .chart-area {
     width: 100%;
-    height: 450px;             /* 1개이므로 높이를 조금 더 확보 */
-    background-color: #ffffff; /* 회색 배경 유지 */
+    height: 450px;
+    background-color: #ffffff;
     border-radius: 12px;
-    border: 1px solid #eee; /* 점선 테두리 유지 */
+    border: 1px solid #eee;
     overflow: hidden;
-    display: block;
 }
 
 .chart-container-target {
@@ -136,6 +151,60 @@ header h1 {
     height: 100%;
 }
 
+/* ================= 추가 카드 ================= */
+/* 🔧 chart-card와 완전히 분리 */
+.add-chart-btn {
+    border: 2px dashed #ced4da;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 28px 0;
+    transition: all 0.25s ease;
+}
+
+.add-chart-btn:hover {
+    background: #ffffff;
+    border-color: #1a237e;
+    transform: translateY(-3px);
+}
+
+.add-card-content {
+    text-align: center;
+    color: #8d949e;
+    line-height: 1.2;
+}
+
+.plus-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 200;
+}
+
+.add-card-content p {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* ================= 🔥 핵심 레이아웃 규칙 ================= */
+/* 🔧 카드 개수 짝수 → 추가 카드 전체 span */
+.dashboard-container.even .add-chart-btn {
+    grid-column: 1 / -1;
+}
+
+/* 🔧 카드 개수 홀수 → 추가 카드 1칸 + 높이 맞춤 */
+.dashboard-container.odd .add-chart-btn {
+    grid-column: auto;
+    align-self: stretch;
+}
+
+/* ================= 모달 / 기타 ================= */
 footer {
     text-align: center;
     padding: 40px;
@@ -143,125 +212,20 @@ footer {
     font-size: 0.85rem;
 }
 
-/* 커스텀 기간 설정 모달 */
-/* 커스텀 기간 설정 모달 (2번: 캘린더 일체형 스타일) */
-.custom-period-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #ffffff;
-    padding: 24px;
-    border-radius: 16px; /* 카드와 통일감 있게 */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    width: 320px;
-    border: 1px solid #f0f0f0;
-}
-
-.custom-period-modal h4 {
-    margin: 0 0 20px 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #1a237e; /* 헤더와 동일한 메인 컬러 */
-    text-align: center;
-}
-
-/* 날짜 입력 그룹 정렬 */
-.custom-period-modal label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-size: 0.85rem;
-    color: #616770;
-    margin-bottom: 16px;
-    font-weight: 600;
-}
-
-/* 인풋 디자인 개선 */
-.custom-period-modal input[type="date"] {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #e4e6e9;
-    background: #f8f9fa;
-    font-size: 0.9rem;
-    color: #1c1e21;
-    outline: none;
-    transition: all 0.2s ease;
-}
-
-.custom-period-modal input[type="date"]:focus {
-    border-color: #1a237e;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
-}
-
-/* 하단 버튼 배치 */
-.custom-period-actions {
-    display: flex;
-    justify-content: space-between; /* 양쪽 끝 배치 */
-    gap: 10px;
-    margin-top: 24px;
-}
-
-.custom-period-actions button {
-    flex: 1; /* 버튼 크기 균등하게 */
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-/* 취소 버튼 */
-.custom-period-cancel {
-    background: #f1f3f5;
-    color: #616770;
-}
-
-.custom-period-cancel:hover {
-    background: #e4e6e9;
-}
-
-/* 확인 버튼 */
-.custom-period-confirm {
-    background: #1a237e;
-    color: white;
-}
-
-.custom-period-confirm:hover {
-    background: #0d144d;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(26, 35, 126, 0.2);
-}
-
 .hidden {
-    display: none;
+    display: none !important;
 }
 
-/* lightweight-charts 실제 컨테이너 */
-.chart-container-target {
-    width: 100%;
-    height: 100%;
-}
-
-/* 로딩 오버레이 중앙 고정 */
+/* 로딩 오버레이 */
 .loading-overlay {
     position: absolute;
     inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #adb5bd;
-    font-size: 0.9rem;
     background: rgba(248, 249, 250, 0.8);
+    color: #adb5bd;
     z-index: 10;
-
-    opacity: 1;
-    pointer-events: none;
     transition: opacity 0.2s ease;
 }
 
@@ -269,24 +233,23 @@ footer {
     opacity: 0;
 }
 
-/* 배경 오버레이 스타일 */
+/* 모달 오버레이 */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* 배경 어둡기 정도 */
-    backdrop-filter: blur(2px);     /* 배경 흐리게 (선택 사항) */
-    z-index: 999;                   /* 모달(1000)보다 낮고 다른 요소보다 높게 */
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
+    z-index: 999;
 }
 
-/* 모달의 z-index 확인 */
 .custom-period-modal {
-    z-index: 1000; /* 오버레이보다 위에 있어야 함 */
-}
-
-/* hidden 클래스는 공용으로 사용 */
-.hidden {
-    display: none !important;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 24px;
+    border-radius: 16px;
+    width: 320px;
+    z-index: 1000;
 }

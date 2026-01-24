@@ -10,6 +10,8 @@ const chartContainer = chartCard.querySelector('.chart-container-target');
 const chartTitleElement = chartCard.querySelector('.chart-title');
 const loadingOverlay = chartCard.querySelector('.loading-overlay');
 const periodControls = chartCard.querySelector('.period-controls');
+const addChartBtn = document.getElementById('add-new-chart');
+const dashboardContainer = document.querySelector('.dashboard-container');
 
 /* ===== 상태 ===== */
 const currentIndicator = {
@@ -18,6 +20,24 @@ const currentIndicator = {
 };
 
 let economicChart = null;
+
+addChartBtn.addEventListener('click', () => {
+    alert('새로운 경제지표 추가');
+});
+
+function updateDashboardLayout() {
+    const chartCards = dashboardContainer.querySelectorAll('.chart-card');
+
+    dashboardContainer.classList.remove('single', 'odd', 'even');
+
+    if (chartCards.length === 1) {
+        dashboardContainer.classList.add('single');
+    } else if (chartCards.length % 2 === 0) {
+        dashboardContainer.classList.add('even');
+    } else {
+        dashboardContainer.classList.add('odd');
+    }
+}
 
 /* ===== 차트 렌더 ===== */
 function renderChart(data) {
@@ -170,3 +190,4 @@ function openCustomPeriodUI() {
 
 /* ===== 초기 로드 ===== */
 requestDatabyPeriod(currentIndicator.id, "1y");
+updateDashboardLayout();
