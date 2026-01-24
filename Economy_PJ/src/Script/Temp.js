@@ -70,7 +70,12 @@ function renderChart(data) {
             horzLines: { color: '#eee' },
         },
         rightPriceScale: { borderColor: '#ccc' },
-        timeScale: { borderColor: '#ccc' },
+        timeScale: {
+            borderColor: '#ccc',
+            fixLeftEdge: true,
+            fixRightEdge: true,
+            lockVisibleTimeRangeOnResize: true,
+        },
     });
 
     const series = economicChart.addSeries(LineSeries, {
