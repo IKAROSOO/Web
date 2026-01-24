@@ -39,7 +39,7 @@ function renderChart(data) {
             }
         },
         width: chartContainer.clientWidth,
-        height: 350,
+        height: chartContainer.clientHeight,
         layout: {
             textColor: '#333',
             background: { color: '#ffffff' },
