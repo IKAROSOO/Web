@@ -10,7 +10,6 @@ const chartContainer = chartCard.querySelector('.chart-container-target');
 const chartTitleElement = chartCard.querySelector('.chart-title');
 const loadingOverlay = chartCard.querySelector('.loading-overlay');
 const periodControls = chartCard.querySelector('.period-controls');
-const addChartBtn = document.getElementById('add-new-chart');
 const dashboardContainer = document.querySelector('.dashboard-container');
 
 /* ===== 상태 ===== */
@@ -20,10 +19,6 @@ const currentIndicator = {
 };
 
 let economicChart = null;
-
-addChartBtn.addEventListener('click', () => {
-    alert('새로운 경제지표 추가');
-});
 
 function updateDashboardLayout() {
     const chartCards = dashboardContainer.querySelectorAll('.chart-card');

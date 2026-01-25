@@ -9,6 +9,7 @@ const graphIndicators = [
 ];
 const container = document.querySelector('.dashboard-container');
 const graphTemplate = document.querySelector('#indicators-template');
+const addChartBtn = document.getElementById('add-new-chart');
 
 function getAdaptiveFontSize(text) {
     /**
@@ -20,49 +21,43 @@ function getAdaptiveFontSize(text) {
     return "1.1rem";
 }
 
-async function requestDatabyPeriod(card, period) {
-    /**
-     * 기간 버튼을 눌렀을 때, 해당 버튼이 소속된 카드의 id와 눌린 period를 확인해서
-     * 서버로 2개의 정보를 전송하여 data를 요청하는 함수
-     */
-    // console.log("함수가 요청됨");
+/* ===== 경제지표 추가버튼 이벤트리스너 ===== */
+addChartBtn.addEventListener('click', () => {
+    alert.apply('새로운 경제지표 추가');
+})
 
-    const indicator = card.dataset.indicatorId;
-
+/* ===== 추가할 수 있는 환율 데이터를 요청하는 함수 ===== */
+async function requestSeriesData() {
     try {
-        const url = `/api/data?indicator=${indicator}&period=${period}`;
+        const url = "/api/exchange_series";
         const response = await fetch(url);
 
-        if (!response.ok) throw new Error('네트워크 응답에 문제 발생');
-        const data = await response.json();
+        if(!response.ok) throw new Error("네트워크 오류");
 
-        // console.log(data);
-
-        data.data.forEach(item => {
-            console.log(`Date: ${item.date}, Exchange: ${item.value}`);
-        })
+        const result = await response.json();
+        console.log('환율 시리즈 데이터:', result);
     } catch (error) {
-        console.error("데이터를 가져오는 중 오류 발생 : ", error);
+        console.error('데이터 요청 중 오류 발생:', error);
     }
 }
 
-graphIndicators.forEach(data => {
-    /**
-     * indicator에서 문자열을 읽어 각 카드의 이름을 부여 선언
-     * 문자의 크기에 맞춰 적절히 조절하는 함수를 끌어온다.
-     */
-    const clone = graphTemplate.content.cloneNode(true);
-    const cardWrapper = clone.querySelector('.chart-card');
-    const graphTitleElement = clone.querySelector('h3');
-    const titleText = data.title;
+// graphIndicators.forEach(data => {
+//     /**
+//      * indicator에서 문자열을 읽어 각 카드의 이름을 부여 선언
+//      * 문자의 크기에 맞춰 적절히 조절하는 함수를 끌어온다.
+//      */
+//     const clone = graphTemplate.content.cloneNode(true);
+//     const cardWrapper = clone.querySelector('.chart-card');
+//     const graphTitleElement = clone.querySelector('h3');
+//     const titleText = data.title;
 
-    cardWrapper.dataset.indicatorId = data.id;
+//     cardWrapper.dataset.indicatorId = data.id;
 
-    graphTitleElement.textContent = titleText;
-    graphTitleElement.style.fontSize = getAdaptiveFontSize(titleText);
+//     graphTitleElement.textContent = titleText;
+//     graphTitleElement.style.fontSize = getAdaptiveFontSize(titleText);
 
-    container.appendChild(clone);
-});
+//     container.appendChild(clone);
+// });
 
 document.addEventListener('DOMContentLoaded', () => {
     /**
@@ -91,3 +86,5 @@ document.addEventListener('DOMContentLoaded', () => {
         periodBtn.classList.add('active');
     });
 });
+
+requestSeriesData();
