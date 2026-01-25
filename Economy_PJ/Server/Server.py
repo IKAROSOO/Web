@@ -66,6 +66,7 @@ except FileNotFoundError:
 
 # print(f'\n\n{URL_DATA}\n\n')
 
+# 요청받은 국가의 일간 환율데이터를 API요청 후 반환하는 함수
 def ExchangeRate(api_key, url_data, series_id, start_date, end_date):
     if end_date is None:
         end_date = datetime.date.today().strftime("%Y-%m-%d")
@@ -95,6 +96,54 @@ def ExchangeRate(api_key, url_data, series_id, start_date, end_date):
         print(f"Error: {response.status_code}")
         print(f"Error details: {response.text}")
         return None
+
+# 요청할 수 있는 일간 환율데이터의 series_id 목록을 반환하는 함수
+def ExchangeRate_series(api_key, url_data):
+    url = url_data['FRED_CurrencyList']
+
+    params = {
+        "search_text": "exchange rate",
+        "api_key": api_key,
+        "file_type": "json",
+        "filter_variable": "frequency",
+        "filter_value": "Daily",  # 무조건 일간 데이터만 필터링
+        "order_by": "popularity",
+        "sort_order": "desc",
+        "limit": 1000,
+        "offset": 0
+    }
+
+    result = []
+
+    try:
+        response = requests.get(url, params=params)
+        if response.status_code != 200:
+            print(response.text)
+            return None
+
+        data = response.json()
+        seriess = data.get("seriess", [])
+
+        for series in seriess:
+            series_id = series.get("id", "")
+
+            # USD 기준 일간 환율만
+            if (
+                series_id.startswith("DEX")
+                and series_id.endswith("US")
+                and len(series_id) in (7, 8)
+            ):
+                currency_code = series_id[3:-2]  # KO, JP, CH ...
+
+                result.append({
+                    "currency_fred": currency_code,
+                    "series_id": series_id,
+                })
+
+        return result
+
+    except Exception as e:
+        print(e)
 
 def OpenBrowser():
     webbrowser.open_new('http://127.0.0.1:5050/')
@@ -132,6 +181,23 @@ def data_request():
     }
 
     return jsonify(result)
+
+@app.route('/api/exchange_series')
+def exchange_series():
+    series_info = ExchangeRate_series(FRED_API_KEY, URL_DATA)
+
+    print("환율 데이터 시리즈 정보 요청됨")
+
+    if(series_info):
+        print(f"환율 시리즈 개수: {len(series_info)}")
+        print(series_info)
+    else:
+        print("환율 시리즈 정보를 가져오지 못함")
+    
+    # if series_info:
+    #     return jsonify(series_info)
+    # else:
+    #     return jsonify({"error": "Could not fetch exchange rate series"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5050)
