@@ -1,9 +1,11 @@
-import { requestExchangeDatabyPeriod } from "./Test_01";
+import { requestExchangeDatabyPeriod } from "./CardAddTest";
 
 const container = document.querySelector('.dashboard-container');
 const dashboardContainer = document.querySelector('.dashboard-container');
 const modal = document.getElementById('custom-period-modal');
 const overlay = document.getElementById('modal-overlay');
+const templateCard = document.querySelector('.chart-card.template');
+const addNewCard = document.getElementById("add-new-chart");
 
 /**
  * 1. UI 레이아웃 업데이트
@@ -57,9 +59,9 @@ function handleCustomPeriod(card, indicatorId) {
 /**
  * 4. 고정 기간 설정 로직
  */
-// function handleFixedPeriod(card, indicatorId, period) {
-//     requestExchangeDatabyPeriod(indicatorId, period, card);
-// }
+function handleFixedPeriod(card, indicatorId, period) {
+    requestExchangeDatabyPeriod(indicatorId, period, card);
+}
 
 
 /**
@@ -70,7 +72,7 @@ container.addEventListener('click', (e) => {
     if (!periodBtn) return;
 
     const card = periodBtn.closest('.chart-card');
-    const indicatorId = card.dataset.indicatorId; // HTML의 data-indicator-id 속성 사용
+    const indicatorId = card.dataset.chartId; // HTML의 data-chart-id 속성 사용
     const period = periodBtn.dataset.period;
 
     // UI 피드백: 활성 버튼 표시
@@ -84,6 +86,23 @@ container.addEventListener('click', (e) => {
         requestExchangeDatabyPeriod(indicatorId, period, card);
     }
 });
+
+/**
+ * 새 카드 추가
+ */
+addNewCard.addEventListener('click', () => {
+    const indicatorId = `exchange-${Date.now()}`;
+    
+    const card = templateCard.cloneNode(true);
+    card.classList.remove('template', 'hidden');
+    card.dataset.indicatorId = indicatorId;
+
+    dashboardContainer.insertBefore(card, addNewCard);
+
+    updateDashboardLayout();
+    requestExchangeDatabyPeriod(indicatorId, "1y", card);
+})
+
 
 /**
  * 6. 초기화 실행
