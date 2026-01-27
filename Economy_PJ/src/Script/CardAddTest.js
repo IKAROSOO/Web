@@ -57,7 +57,7 @@ function renderChart(data) {
     });
 
     /* ===== 컨테이너의 크기가 변할 시 차트크기 자동 업데이트 ===== */
-    const resizeObserver = new ResizeObserver(entries => {
+    resizeObserver = new ResizeObserver(entries => {
         if (!resizeObserver) return;
         
         for (let entry of entries) {
@@ -105,5 +105,23 @@ export async function requestExchangeDatabyPeriod(indicatorId, startDate, card, 
     } catch (err) {
         console.error(err);
         loadingOverlay.textContent = "데이터를 가져오지 못했습니다.";
+    }
+}
+
+ /* ===== 추가할 수 있는 환율 데이터를 요청하는 함수 ===== */
+export async function requestSeriesData() {
+    try {
+        const url = "/api/exchange_series";
+        const response = await fetch(url);
+
+        if(!response.ok) throw new Error("네트워크 오류");
+
+        const result = await response.json();
+        console.log('환율 시리즈 데이터:', result);
+
+        return result;
+    } catch (error) {
+        console.error('데이터 요청 중 오류 발생:', error);
+        return null;
     }
 }

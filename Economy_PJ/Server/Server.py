@@ -190,14 +190,14 @@ def exchange_series():
 
     if(series_info):
         print(f"환율 시리즈 개수: {len(series_info)}")
-        print(series_info)
+        # print(series_info)
     else:
         print("환율 시리즈 정보를 가져오지 못함")
     
-    # if series_info:
-    #     return jsonify(series_info)
-    # else:
-    #     return jsonify({"error": "Could not fetch exchange rate series"}), 500
+    if series_info:
+        return jsonify(series_info)
+    else:
+        return jsonify({"error": "Could not fetch exchange rate series"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5050)

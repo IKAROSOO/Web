@@ -1,4 +1,7 @@
-import { requestExchangeDatabyPeriod } from "./CardAddTest";
+import {
+    requestExchangeDatabyPeriod,
+    requestSeriesData
+} from "./CardAddTest";
 
 const container = document.querySelector('.dashboard-container');
 const dashboardContainer = document.querySelector('.dashboard-container');
@@ -6,6 +9,8 @@ const modal = document.getElementById('custom-period-modal');
 const overlay = document.getElementById('modal-overlay');
 const templateCard = document.querySelector('.chart-card.template');
 const addNewCard = document.getElementById("add-new-chart");
+
+let seriesList = null;
 
 /**
  * 1. UI 레이아웃 업데이트
@@ -63,7 +68,6 @@ function handleFixedPeriod(card, indicatorId, period) {
     requestExchangeDatabyPeriod(indicatorId, period, card);
 }
 
-
 /**
  * 5. 통합 이벤트 리스너(이벤트 위임)
  */
@@ -90,25 +94,64 @@ container.addEventListener('click', (e) => {
 /**
  * 새 카드 추가
  */
-addNewCard.addEventListener('click', () => {
-    const indicatorId = `exchange-${Date.now()}`;
-    
+addNewCard.addEventListener('click', async () => {
+    const selector = document.getElementById('series-selector-container');
+    const listContainer = document.getElementById('series-list');
+
+    const data = await seriesList;
+    // console.log(data);
+
+    if (!data || data.length === 0) {
+        alert("지표 목록을 불러오는 중입니다.\n잠시 후 다시 시도해주세요");
+        return;
+    }
+
+    listContainer.innerHTML = '';
+    data.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.currency_fred} 환율(${item.series_id})`;
+        li.dataset.id = item.series_id;
+
+        li.onclick = () => {
+            createSelectedCard(item.id, item.name);
+            setSelectorVisibility(false);
+        };
+        listContainer.appendChild(li);
+    });
+
+    setSelectorVisibility(true);
+});
+
+const setSelectorVisibility = (isVisible) => {
+    const selector = document.getElementById('series-selector-container');
+    selector.classList.toggle('hidden', !isVisible);
+    overlay?.classList.toggle('hidden', !isVisible);
+};
+
+function createSelectedCard(indicatorId, indicatorName) {
+    // 1. 템플릿 복제
     const card = templateCard.cloneNode(true);
     card.classList.remove('template', 'hidden');
-    card.dataset.indicatorId = indicatorId;
+    
+    // 2. 선택한 지표에 맞게 데이터 세팅
+    card.dataset.indicatorId = indicatorId; 
+    const titleElement = card.querySelector('.chart-title');
+    if (titleElement) titleElement.textContent = indicatorName;
 
+    // 3. 대시보드에 삽입
     dashboardContainer.insertBefore(card, addNewCard);
 
+    // 4. 레이아웃 업데이트 및 데이터 요청
     updateDashboardLayout();
     requestExchangeDatabyPeriod(indicatorId, "1y", card);
-})
-
+}
 
 /**
  * 6. 초기화 실행
  */
 const init = () => {
     updateDashboardLayout();
+    seriesList = requestSeriesData();
 
     // 초기 로드 시 존재하는 모든 카드에 대해 데이터 요청
     const initialCards = container.querySelectorAll('.chart-card');
