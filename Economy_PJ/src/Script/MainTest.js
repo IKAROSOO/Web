@@ -76,7 +76,7 @@ container.addEventListener('click', (e) => {
     if (!periodBtn) return;
 
     const card = periodBtn.closest('.chart-card');
-    const indicatorId = card.dataset.chartId; // HTML의 data-chart-id 속성 사용
+    const indicatorId = card.dataset.indicatorId; // HTML의 data-indicator-id 속성 사용
     const period = periodBtn.dataset.period;
 
     // UI 피드백: 활성 버튼 표시
@@ -99,7 +99,7 @@ addNewCard.addEventListener('click', async () => {
     const listContainer = document.getElementById('series-list');
 
     const data = await seriesList;
-    // console.log(data);
+    console.log(data);
 
     if (!data || data.length === 0) {
         alert("지표 목록을 불러오는 중입니다.\n잠시 후 다시 시도해주세요");
@@ -113,7 +113,11 @@ addNewCard.addEventListener('click', async () => {
         li.dataset.id = item.series_id;
 
         li.onclick = () => {
-            createSelectedCard(item.id, item.name);
+            const indicatorId = item.series_id;
+            const indicatorName = `${item.currency_fred} 환율`;
+
+            console.log(`\n\n선택된 지표 ID: ${indicatorId}\n\n`);
+            createSelectedCard(indicatorId, indicatorName);
             setSelectorVisibility(false);
         };
         listContainer.appendChild(li);
@@ -140,6 +144,8 @@ function createSelectedCard(indicatorId, indicatorName) {
 
     // 3. 대시보드에 삽입
     dashboardContainer.insertBefore(card, addNewCard);
+
+    console.log(card.dataset);
 
     // 4. 레이아웃 업데이트 및 데이터 요청
     updateDashboardLayout();
