@@ -61,11 +61,44 @@ function extractPageText() {
     URL.revokeObjectURL(url);
 }
 
+function downloadSpecificNovelText() {
+    const novelContainer = document.getElementById("novel_content");
+    
+    if (!novelContainer) {
+        console.warn("본문을 찾을 수 없습니다.");
+        return;
+    }
+
+    const extractedText = novelContainer.innerText || novelContainer.textContent;
+    const tabTitle = checkTabInfo().title;
+    const fileName = `${tabTitle}_본문.txt`;
+
+    const blob = new Blob([extractedText], {type: 'text/plain'});
+    const url = URL.createObjectURL(blob);
+    
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = fileName;
+    
+    // 스타일을 주어 확실히 존재하게 함
+    downloadLink.style.display = 'none';
+    document.body.appendChild(downloadLink);
+
+    // 0ms 지연을 주어 비동기로 실행 (클릭 신뢰도 상승)
+    setTimeout(() => {
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(url);
+        console.log(`${fileName} 다운로드 시도 완료`);
+    }, 0);
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "DownloadBtn_clicked") {
         console.log(`${request.action} 수신`);
         console.log(`${checkTabInfo().title}`);
         // extractPageText();
+        downloadSpecificNovelText();
     }
     return true;
 });
